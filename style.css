@@ -1,0 +1,698 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+  --primary-color: #2980b9;
+  --secondary-color: #27ae60;
+  --background-color: #ededed; /* AliceBlue - Existing Background */
+  --container-color: #e6f1f7; /* Light bluish-gray - NEW */
+  --text-color: #333;
+  --card-background: #fff;
+  --button-background: #3498db;
+  --button-hover: #2980b9;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --transition-speed: 0.3s;
+  --suggestion-bg: #f9f9f9;
+  --suggestion-hover-bg: #e9e9e9;
+  --suggestion-border: #ddd;
+  --clear-button-color: #aaa;
+  --clear-button-hover-color: #888;
+  --forecast-item-active-bg: #d6e8ff;
+  --settings-bg: #f5f5f5;
+  --settings-hover-bg: #e0e0e0;
+  --settings-border: #ddd;
+  --settings-option-separator: #eee;
+  --active-option-bg: #3498db;
+  --active-option-color: #fff;
+  --button-click-bg: #2980b9;
+  /* New variable for header button font */
+  --header-button-font: "Poppins", sans-serif;
+  --button-icon-margin: 0.5rem; /* Consistent icon margin */
+  --search-button-bg: #ddd; /* Light gray for search button */
+  --search-button-hover-bg: #ccc; /* Slightly darker gray for hover */
+  --search-button-color: #333; /* Dark gray for icon/text */
+}
+
+.dark-theme {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --background-color: #1a1a2e;
+  --container-color: #16213e; /* Darker container for dark theme */
+  --text-color: #e0e0e0;
+  --card-background: #16213e; /* Same as container for consistency */
+  --button-background: #0f3460;
+  --button-hover: #1a4a80;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+  --suggestion-bg: #333;
+  --suggestion-hover-bg: #444;
+  --suggestion-border: #555;
+  --clear-button-color: #666;
+  --clear-button-hover-color: #999;
+  --forecast-item-active-bg: #2c3e50;
+  --settings-bg: #333;
+  --settings-hover-bg: #444;
+  --settings-border: #555;
+  --settings-option-separator: #444;
+  --active-option-bg: #0f3460;
+  --active-option-color: #fff;
+  --button-click-bg: #1a4a80;
+  /* Use the same for dark theme, but you *could* customize */
+  --search-button-bg: #ddd; /* Same as light theme */
+  --search-button-hover-bg: #ccc; /* Same as light theme */
+  --search-button-color: #333; /* Same as light theme */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: var(--background-color); /* Use the variable */
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color var(--transition-speed),
+    color var(--transition-speed);
+}
+
+.container {
+  background: var(--container-color); /* Use the variable */
+  backdrop-filter: blur(10px); /* Keep the blur */
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 0 20px var(--shadow-color);
+  width: 90%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  transition: background-color var(--transition-speed),
+    box-shadow var(--transition-speed);
+}
+
+.weather__header {
+  display: flex;
+  align-items: center; /* Keep items vertically aligned */
+  flex-wrap: wrap; /* Allow wrapping for better mobile display */
+  gap: 1rem;
+  margin-bottom: 2rem;
+  width: 100%; /* Ensure the header takes the full width */
+  justify-content: space-between; /* Distribute space between items */
+}
+
+.weather__search {
+  flex-grow: 1;
+  display: flex;
+  position: relative;
+  margin-right: 1rem; /* Add some space between search and buttons */
+  min-width: 250px; /* Ensure search doesn't get too small */
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%; /* Make it responsive */
+  position: relative;
+}
+
+.weather__searchform {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: none;
+  background: var(--card-background);
+  color: var(--text-color);
+  border-radius: 30px 0 0 30px;
+  font-size: 1rem;
+  transition: all var(--transition-speed) ease;
+}
+
+/* White outline for dark theme search input */
+.dark-theme .weather__searchform {
+  background: var(--card-background); /* Use dark theme card background */
+  color: var(--text-color); /* Use dark theme text color */
+  border: 1px solid #fff; /* White border */
+}
+
+.weather__searchform:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+.weather__searchbutton {
+  border-radius: 0 30px 30px 0;
+  background: var(--search-button-bg);
+  color: var(--search-button-color);
+  border: none;
+  padding: 0.8rem 1.2rem; /* Increase padding here */
+}
+
+/* Hover effect - including transition for smooth change */
+.weather__searchbutton:hover {
+  background: var(--search-button-hover-bg);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--shadow-color); /* Keep consistent shadow */
+  color: var(--search-button-color); /* Keep icon color consistent on hover */
+}
+
+/*Active effect*/
+.weather__searchbutton:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+/* Set same style to the focus*/
+.weather__searchbutton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--search-button-color);
+}
+
+.settings-button,
+.chatbot-button,
+.geolocation-button {
+  background: var(--button-background);
+  border: none;
+  color: white;
+  padding: 0.8rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* Hover styles */
+.settings-button:hover,
+.chatbot-button:hover,
+.geolocation-button:hover {
+  background: var(--button-hover);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--shadow-color);
+}
+.weather__body {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.weather__city {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.weather__datetime {
+  font-size: 1rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+.weather__forecast {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.weather__temperature {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+
+.weather__minmax {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.weather__info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.weather__card {
+  background: var(--card-background);
+  padding: 1rem;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all var(--transition-speed) ease;
+}
+
+/* White outline for weather cards in dark theme */
+.dark-theme .weather__card {
+  border: 1px solid #fff; /* Add white border */
+}
+
+.weather__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.weather__card i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.weather__card p {
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.weather__card p:first-of-type {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.forecast__container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling for iOS */
+  scrollbar-width: thin; /* For Firefox */
+}
+
+.forecast__item {
+  flex: 0 0 auto;
+  background: var(--card-background);
+  padding: 1rem;
+  border-radius: 15px;
+  text-align: center;
+  min-width: 120px;
+  transition: all var(--transition-speed) ease;
+  cursor: pointer;
+}
+
+.forecast__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.forecast__item.active {
+  background-color: var(--forecast-item-active-bg);
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+/* White outline for forecast items in dark theme */
+.dark-theme .forecast__item {
+  border: 1px solid #fff; /* Add white border */
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--button-hover);
+}
+
+.suggestions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--suggestion-bg);
+  border: 1px solid var(--suggestion-border);
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: none;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestions-list.show {
+  display: block;
+}
+
+.suggestions-list li {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  color: var(--text-color);
+}
+
+.suggestions-list li:hover {
+  background-color: var(--suggestion-hover-bg);
+}
+
+.clear-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--clear-button-color);
+  cursor: pointer;
+  padding: 0;
+  font-size: 1rem;
+  z-index: 11;
+  transition: color var(--transition-speed);
+  display: none;
+}
+
+.clear-button:hover {
+  color: var(--clear-button-hover-color);
+}
+
+.clear-button:focus {
+  outline: none;
+}
+.settings-container {
+  position: relative;
+  display: inline-block;
+}
+.settings-button-text {
+  margin-left: 0.3rem; /* Use consistent spacing */
+}
+
+.settings-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--settings-bg);
+  border: 1px solid var(--settings-border);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 15;
+  display: none;
+  min-width: 160px;
+  padding: 0.5rem 0;
+  white-space: nowrap;
+}
+
+.settings-container:hover .settings-dropdown {
+  display: block;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.settings-dropdown.show-settings {
+  display: block;
+  animation: fadeIn 0.2s ease forwards;
+}
+
+.setting-option {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--settings-option-separator);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text-color);
+}
+
+.setting-option > span {
+  margin-right: 1rem;
+}
+
+.setting-option:last-child {
+  border-bottom: none;
+}
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Style updates for consistent button appearance */
+.button-group .weather_unit_celsius,
+.button-group .weather_unit_fahrenheit,
+.button-group .theme-option,
+.button-group .time-format-option {
+  /* Added .time-format-option */
+  padding: 0.5rem;
+  border-radius: 30px; /* Consistent rounded corners */
+  border: 1px solid var(--settings-border);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color var(--transition-speed), transform 0.1s ease,
+    box-shadow var(--transition-speed); /* Added box-shadow transition */
+  white-space: nowrap;
+}
+
+/* Active option styles */
+.button-group .active-option {
+  background-color: var(--active-option-bg);
+  color: var(--active-option-color);
+  border-color: var(--active-option-bg);
+}
+
+/* Hover, Active, and Focus styles */
+.button-group button:hover,
+.button-group .theme-option:hover,
+.button-group .time-format-option:hover {
+  /* Added hover for time-format-option */
+  background-color: var(--settings-hover-bg);
+  box-shadow: 0 2px 4px var(--shadow-color); /* Add a subtle shadow on hover */
+}
+
+.button-group button:active,
+.button-group .theme-option:active,
+.button-group .time-format-option:active {
+  /* Added active for time-format-option */
+  background-color: var(--button-click-bg);
+  transform: scale(0.95);
+}
+
+.button-group button:focus,
+.button-group .theme-option:focus,
+.button-group .time-format-option:focus {
+  /* Added focus for time-format-option */
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.button-group img {
+  width: 24px;
+  height: 18px;
+}
+
+/* Logo Styles */
+.logo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0; /* Remove padding to allow precise sizing */
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Vertically center the logo */
+  transition: transform 0.3s ease;
+}
+
+.logo-button:hover {
+  transform: scale(1.1);
+}
+
+.logo-image {
+  width: 170px; /* Adjust based on your design */
+  height: auto; /*  Adjust based on your design */
+  object-fit: contain; /* Keep aspect ratio */
+}
+
+/* Header Buttons Styles */
+.header-buttons {
+  display: flex;
+  gap: 1rem; /* Consistent gap between buttons */
+  align-items: center; /* Ensure vertical alignment */
+  justify-content: flex-end; /* Align buttons to the right */
+  flex-wrap: wrap; /* Allow wrapping for small screens */
+}
+
+.header-button {
+  background: var(--button-background);
+  border: none;
+  color: white;
+  padding: 0.8rem 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-family: var(--header-button-font); /* Use the defined font */
+  font-size: 1rem; /* Consistent font size */
+  font-weight: 500; /* Use a suitable font weight */
+}
+.header-button:hover {
+  background: var(--button-hover);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--shadow-color);
+}
+
+/* Style the settings button to be consistent but keep dropdown */
+.settings-button {
+  position: relative; /* Needed for dropdown positioning */
+}
+
+/* Add spacing between icon and text in header buttons */
+.button-icon {
+  margin-right: var(--button-icon-margin);
+}
+
+.settings-button .settings-button-text {
+  margin-left: 0.3rem;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 1.5rem 1rem;
+    margin: 1rem auto;
+  }
+
+  .weather__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .logo-button {
+    align-self: center;
+    margin-bottom: 1rem;
+  }
+
+  .weather__search {
+    margin-right: 0;
+    margin-bottom: 1rem;
+    width: 100%;
+    min-width: unset;
+  }
+
+  .header-buttons {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .weather__info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .suggestions-list {
+    font-size: 0.9rem;
+    max-height: 150px; /* Smaller height on mobile */
+  }
+
+  /* Ensure the settings dropdown appears in the right place */
+  .settings-dropdown {
+    left: auto;
+    right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    border-radius: 0;
+    padding: 1rem;
+    margin: 0;
+  }
+
+  .weather__city {
+    font-size: 1.7rem;
+  }
+
+  .weather__temperature {
+    font-size: 2.5rem;
+  }
+
+  .weather__info {
+    grid-template-columns: 1fr;
+  }
+
+  .header-buttons {
+    flex-direction: row; /* Keep buttons in a row */
+    flex-wrap: wrap; /* But allow wrapping */
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .header-button {
+    flex: 1 0 auto; /* Allow buttons to grow but keep their intrinsic width */
+    min-width: 120px; /* Set a minimum width for buttons */
+    padding: 0.7rem 0.8rem; /* Slightly smaller padding on very small screens */
+    font-size: 0.9rem; /* Slightly smaller font */
+  }
+
+  /* Let the forecast items scroll horizontally but don't shrink too much */
+  .forecast__item {
+    min-width: 110px;
+  }
+
+  /* Ensure settings dropdown is positioned correctly on small screens */
+  .settings-dropdown {
+    right: 0;
+    left: auto; /* Override left position */
+    min-width: 200px; /* Ensure it's wide enough to tap easily */
+  }
+
+  /* Make sure buttons in settings are large enough to tap */
+  .button-group button,
+  .button-group .theme-option,
+  .button-group .time-format-option {
+    padding: 0.6rem;
+    min-width: 70px; /* Ensure buttons are wide enough for easy tapping */
+    justify-content: center;
+  }
+}
+
+/* Add touch-specific improvements for mobile devices */
+@media (hover: none) {
+  .weather__card:hover,
+  .forecast__item:hover,
+  .settings-button:hover,
+  .header-button:hover {
+    transform: none; /* Don't apply hover effects on touch devices */
+    box-shadow: none;
+  }
+
+  .weather__card:active,
+  .forecast__item:active,
+  .settings-button:active,
+  .header-button:active {
+    transform: scale(0.98); /* Slight feedback on touch */
+  }
+
+  /* Make buttons more tap-friendly */
+  .header-button,
+  .setting-option,
+  .button-group button,
+  .suggestions-list li {
+    min-height: 44px; /* Apple's recommended minimum tap target size */
+  }
+}

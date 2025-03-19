@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meteovision</title>
+    <link rel="icon" type="image/svg" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="weather__header">
+        <!-- Logo Button -->
+        <button id="logo-button" class="logo-button" aria-label="Reload Page">
+          <img
+            src="meteovision-logo.png"
+            alt="Meteovision Logo"
+            class="logo-image"
+          />
+        </button>
+
+        <form class="weather__search">
+          <div class="input-wrapper">
+            <input
+              type="text"
+              placeholder="Search for a city..."
+              class="weather__searchform"
+              data-i18n="searchPlaceholder"
+              autocomplete="off"
+            />
+            <button type="button" class="clear-button" id="clear-button">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <ul class="suggestions-list"></ul>
+          <button type="submit" class="weather__searchbutton">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+
+        <!-- Button Group -->
+        <!-- Wrap all header buttons, including settings-container, in header-buttons -->
+        <div class="header-buttons">
+          <button id="geolocation-button" class="header-button">
+            <i class="fas fa-map-marker-alt button-icon"></i>
+            <!-- Added class button-icon -->
+            <span data-i18n="location">Location</span>
+          </button>
+          <a
+            href="https://t.me/MeteovisionBot"
+            id="chatbot-button"
+            class="header-button"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open Chatbot"
+          >
+            <i class="fa-brands fa-telegram button-icon"></i>
+            <!-- Added class button-icon -->
+            <span data-i18n="chatbot">Chatbot</span>
+          </a>
+          <div class="settings-container">
+            <button
+              id="settings-button"
+              class="header-button settings-button"
+              aria-label="Settings"
+            >
+              <i class="fas fa-gear button-icon"></i>
+              <span class="settings-button-text" data-i18n="settings"
+                >Settings</span
+              >
+            </button>
+            <div class="settings-dropdown">
+              <div class="setting-option">
+                <span data-i18n="temperature">Temperature</span>
+                <div class="button-group">
+                  <button class="weather_unit_celsius">
+                    <span data-i18n="celsius">Celsius</span>, °C
+                  </button>
+                  <button class="weather_unit_fahrenheit">
+                    <span data-i18n="fahrenheit">Fahrenheit</span>, °F
+                  </button>
+                </div>
+              </div>
+
+              <div class="setting-option">
+                <span data-i18n="theme">Theme</span>
+                <div class="button-group">
+                  <button class="theme-option" data-theme="light">
+                    <span data-i18n="lightTheme">Light</span>
+                    <i class="fas fa-sun"></i>
+                  </button>
+                  <button class="theme-option" data-theme="dark">
+                    <span data-i18n="darkTheme">Dark</span>
+                    <i class="fas fa-moon"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- Time Format Setting -->
+              <div class="setting-option">
+                <span data-i18n="timeFormat">Time Format</span>
+                <div class="button-group">
+                  <button class="time-format-option" data-time-format="24">
+                    24:00
+                  </button>
+                  <button class="time-format-option" data-time-format="12">
+                    12:00 PM
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="weather__body">
+        <h1 class="weather__city"></h1>
+        <div class="weather__datetime"></div>
+        <div class="weather__forecast"></div>
+        <div class="weather__icon"></div>
+        <div class="weather__temperature"></div>
+        <div class="weather__minmax"></div>
+
+        <div class="weather__info">
+          <div class="weather__card weather__realfeel">
+            <i class="fas fa-thermometer-half"></i>
+            <div>
+              <p data-i18n="realFeel">Real Feel</p>
+              <p class="weather__realfeel__value"></p>
+            </div>
+          </div>
+          <div class="weather__card weather__humidity">
+            <i class="fas fa-tint"></i>
+            <div>
+              <p data-i18n="humidity">Humidity</p>
+              <p class="weather__humidity__value"></p>
+            </div>
+          </div>
+          <div class="weather__card weather__wind">
+            <i class="fas fa-wind"></i>
+            <div>
+              <p data-i18n="wind">Wind</p>
+              <p class="weather__wind__value"></p>
+            </div>
+          </div>
+          <div class="weather__card weather__pressure">
+            <i class="fas fa-compress-alt"></i>
+            <div>
+              <p data-i18n="pressure">Pressure</p>
+              <p class="weather__pressure__value"></p>
+            </div>
+          </div>
+          <div class="weather__card weather__sunrise">
+            <i class="fas fa-sun"></i>
+            <div>
+              <p data-i18n="sunrise">Sunrise</p>
+              <p class="weather__sunrise__value"></p>
+            </div>
+          </div>
+          <div class="weather__card weather__sunset">
+            <i class="fas fa-moon"></i>
+            <div>
+              <p data-i18n="sunset">Sunset</p>
+              <p class="weather__sunset__value"></p>
+            </div>
+          </div>
+          <div class="weather__card weather__precipitation">
+            <i class="fas fa-cloud-rain"></i>
+            <div>
+              <p data-i18n="precipitation">Precipitation</p>
+              <p class="weather__precipitation__value"></p>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <section class="weather__forecast">
+        <h2 data-i18n="5dayForecast">5-Day Forecast</h2>
+        <div class="forecast__container"></div>
+      </section>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
